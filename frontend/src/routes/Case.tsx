@@ -1,7 +1,7 @@
 import React from "react";
 import { Layout } from "../styled";
 import Navigation from "../components/sideNavigation";
-import casePreviewData from "../constants/preview";
+import casePreviewData, {SingleCasePreviewData} from "../constants/preview";
 import { inject, observer } from "mobx-react";
 import { compose } from "recompose";
 import RootStore from "../store/RootStore";
@@ -20,7 +20,7 @@ class Case extends React.Component<IProps, IState> {
     caseData: []
   };
   public componentWillMount() {
-    const {
+    /* const {
       location: { pathname }
     } = window;
     const { store } = this.props;
@@ -31,7 +31,30 @@ class Case extends React.Component<IProps, IState> {
       .then(() => {
         store.getCaseParties.setData();
         this.setState({ caseData: casePreviewData(store) });
-      });
+      }); */
+      this.fetchData();
+  }
+  
+  componentDidMount(){
+  }
+
+  fetchData = async() => {
+    const {
+      location: { pathname }
+    } = window;
+    const {store} = this.props;
+    try{
+      console.log('Pathname: ', pathname.substring(14))
+      await store.getCase.fetch({id: pathname.substring(14)})
+      console.log('Data', store.getCase.singleCaseData)
+      store.getCase.setDataCase();
+      this.setState({ caseData: SingleCasePreviewData(store) });
+      //@ts-ignore
+      console.log('Single CaseDate result', store.getCase.singleCaseData);
+      console.log('State of this component: ', this.state.caseData)
+    } catch(err){
+      console.log('testbest', err);
+    }
   }
   render(): JSX.Element {
     const { caseData } = this.state;

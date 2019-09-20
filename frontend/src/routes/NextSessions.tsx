@@ -95,7 +95,7 @@ class NextSessions extends React.Component<IProps & IInjected, IState> {
 
   render(): JSX.Element {
     const { getAllCases } = this.props;
-    const userItems = getAllCases.data ? getAllCases.data.rows : [];
+    const userItems = getAllCases.data ? getAllCases.data : [];
     const { numberOfPages, currentPage } = this.state;
    
 
@@ -106,6 +106,7 @@ class NextSessions extends React.Component<IProps & IInjected, IState> {
           
           <DataList
             search
+            //@ts-ignore
             items={userItems}
             columns={caseColumns}
             onItemClick={this.handleClick}

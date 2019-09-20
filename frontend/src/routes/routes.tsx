@@ -21,7 +21,6 @@ import claimsForm from "./ClaimsForm";
 import Header from "../components/header";
 import CreateCase from "./CreateCase";
 import Menu from "../components/Menu";
-import SevenDays from "../components/sevendays/sevenDays"
 
 class Router extends React.Component {
   public render() {
@@ -37,7 +36,7 @@ class Router extends React.Component {
             component={ResetPassword}
           />
           <Route exact={true} path="/" component={Home} />
-          <Route exact={true} path="/nextsessions" component={SevenDays} />
+          <Route exact={true} path="/nextsessions" component={NextSessions} />
           <Route
             exact={true}
             path="/forgot-password"

@@ -76,6 +76,10 @@ export const endpoints: IEndpoints = {
   },
   get_cases: {
     method: "GET",
+    uri: "/api/cases"
+  },
+  get_case: {
+    method: "GET",
     uri: "/api/cases/resource"
   }
 };

@@ -206,17 +206,20 @@ class Table extends React.Component<IProps, IMyComponentState> {
           }
         };
 
-        let filteredItems = this.state.rows.filter(item => {
-          return new Date(item.firstSessionDate) <= new Date(Date.now() + (7*24*60*60*1000)) && new Date(item.firstSessionDate) >= new Date(Date.now())
-        })
+        //let filteredItems = this.state.rows.filter(item => {
+          //return new Date(item.firstSessionDate) <= new Date(Date.now() + (7*24*60*60*1000)) && new Date(item.firstSessionDate) >= new Date(Date.now())
+       // })
+       let filteredItems = items?items!.filter!(item => {
+        return new Date(item.firstSessionDate) <= new Date(Date.now() + (7*24*60*60*1000)) && new Date(item.firstSessionDate) >= new Date(Date.now())
+     }): []
     return !search ? (
       <Layout width="max-content">
-        {this.state.rows && (
+        {items && (
           <FabricDetailsList
             reverse={!!reverse}
             checkboxVisibility={CheckboxVisibility.hidden}
             styles={tableStyles}
-            items={filteredItems}
+            items={items}
             ariaLabel="lalalalalalallaa"
             checkButtonAriaLabel="check"
             className="headerWrapper"
@@ -240,7 +243,7 @@ class Table extends React.Component<IProps, IMyComponentState> {
 
             <DetailsList
               checkboxVisibility={CheckboxVisibility.hidden}
-              items={this.state.stateFlag ? this.state.rows : filteredItems}
+              items={this.state.stateFlag ? filteredItems : filteredItems}
               columns={columns}
               onRenderItemColumn={this.onRenderItemColumn}
               setKey="set"

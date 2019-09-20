@@ -5,19 +5,31 @@ import { ICase } from "../constants/caseInterfaces";
 export default class CaseStore extends PromiseStore {
   caseData: string = "";
   caseId: string | { [key: string]: string } = "0";
+  singleCaseData : string = ''
 
   setData = () => {
     if (this.success && this.data) {
-      const _case = (this.data as unknown) as ICase;
+      const _case = (this.data[0] as unknown) as ICase;
+      console.log('Fetch all cases', this.data)
       if (_case.decisions && _case.decisions.length)
         _case.lastDecisions =
           _case.decisions[_case.decisions.length - 1].decision;
-      // console.log(JSON.stringify(_case));
+      // console.log(JSON.stringify(_case))
       this.caseData = JSON.stringify(_case as ICase);
       this.caseId = this.data.id;
       // console.log("CASE STORE", this.caseData);
     }
   };
+
+  setDataCase = () => {
+    if (this.success && this.data) {
+      console.log('SET DATA CASE', this.data)
+      const _case = (this.data as unknown) as ICase;
+      this.singleCaseData = JSON.stringify(_case as ICase);
+      this.caseId = this.data.id;
+    }
+  };
+
 
   setCaseId = () => {
     if (this.success && this.data) {

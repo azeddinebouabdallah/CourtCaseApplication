@@ -3,7 +3,7 @@ import PROVIDERS from '../constants/providers';
 import { User } from './user.entity';
 import { MailerService } from '@nest-modules/mailer';
 import { SignUpDto } from '../auth/auth.docs';
-import * as bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcrypt';
 import { IResetPassword } from 'src/interfaces/user.interface';
 import * as moment from 'moment';
 

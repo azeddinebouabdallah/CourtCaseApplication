@@ -62,6 +62,7 @@ class Home extends React.Component<IProps & IInjected, IState> {
       ...query
     });
     if ( getAllCases.data) {
+      console.log('ALL DATA: ', getAllCases.data)
       this.setState({
         numberOfPages: Math.ceil((getAllCases.data.count) / rowSize)
       });
@@ -91,21 +92,21 @@ class Home extends React.Component<IProps & IInjected, IState> {
       currentPage: page
     });
   };
-
+   
   render(): JSX.Element {
     const { getAllCases } = this.props;
-    const userItems = getAllCases.data ? getAllCases.data.rows : [];
+    const userItems = getAllCases.data ? getAllCases.data : [];
     const { numberOfPages, currentPage } = this.state;
-   
+    console.log(getAllCases.data, "TTTT",);
 
+    console.log('ALL CASES ', getAllCases.data)
     return (
       <Layout displayFlex column>
-       
         {
           
           <DataList
             search
-            items={userItems}
+            items={userItems!}
             columns={caseColumns}
             onItemClick={this.handleClick}
             loading={getAllCases.loading}

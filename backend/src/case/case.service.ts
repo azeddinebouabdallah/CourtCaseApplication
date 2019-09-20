@@ -67,9 +67,10 @@ export class CaseService {
   findAndCountAll = async (data: CreateCaseDto) =>
     this.CASE_REPOSITORY.findAndCountAll({});
 
-  searchCase = async query => {
+  searchCase = async id => {
+    console.log('ID ---------------------- ' + id)
     return this.CASE_REPOSITORY.findOne<Case>({
-      where: query,
+      where: {id : id},
       include: [
         {
           model: File,
@@ -115,7 +116,7 @@ export class CaseService {
   };
 
   public async registerNewCase(caseData: CreateCaseDto) {
-    console.log('hehehehe', caseData);
+    console.log('Register new case : ', caseData, '\n');
     const newCase: Case = await this.CASE_REPOSITORY.create(caseData);
     this.mailerService.sendMail({
       to: 'adnanahmic203@gmail.com',
@@ -134,6 +135,7 @@ export class CaseService {
   public async registerNewExhibit(
     exhibit: ExhibitDto,
   ): Promise<ICreateExhibit> {
+    console.log('Regisster new Exhibit', exhibit, '\n')
     const newExhibit: Exhibit = await this.EXHIBIT_REPOSITORY.create(exhibit);
     return {
       message: 'Exhibit created',
@@ -143,6 +145,8 @@ export class CaseService {
   }
 
   public async registerNewNotice(notice: NoticeDto): Promise<ICreateNotice> {
+    console.log('Regisster new Notice', notice, '\n')
+
     const newNotice: Notice = await this.NOTICE_REPOSITORY.create(notice);
     return {
       message: 'Notice created',
@@ -154,6 +158,8 @@ export class CaseService {
   public async registerNewDecision(
     decision: DecisionDto,
   ): Promise<ICreateDecision> {
+    console.log('Regisster new Decision', decision, '\n')
+
     const newDecision: Decision = await this.DECISION_REPOSITORY.create(
       decision,
     );
@@ -167,6 +173,7 @@ export class CaseService {
   public async registerNewPetition(
     petition: PetitionDto,
   ): Promise<ICreatePetition> {
+    console.log('Regisster new Petition', petition, '\n')
     const newPetition: Petition = await this.PETITION_REPOSITORY.create(
       petition,
     );
@@ -180,6 +187,8 @@ export class CaseService {
   public async registerNewVerdict(
     verdict: VerdictDto,
   ): Promise<ICreateVerdict> {
+    console.log('Regisster new Verdict', verdict, '\n')
+
     const newVerdict: Verdict = await this.VERDICT_REPOSITORY.create(verdict);
     return {
       message: 'Verdict created',
@@ -191,6 +200,8 @@ export class CaseService {
   public async registerNewDepositVoucher(
     depositVoucher: DepositVoucherDto,
   ): Promise<ICreateDepositVoucher> {
+    console.log('Regisster new depositVoucher', depositVoucher, '\n')
+
     const newDepositVoucher: DepositVoucher = await this.DEPOSIT_VOUCHER_REPOSITORY.create(
       depositVoucher,
     );
@@ -202,6 +213,8 @@ export class CaseService {
   }
 
   public async registerNewClaim(claim: ClaimDto): Promise<ICreateClaim> {
+    console.log('Regisster new Claim', claim, '\n')
+
     const newClaim: Claim = await this.CLAIM_REPOSITORY.create(claim);
     return {
       message: 'Claim created',
@@ -211,6 +224,8 @@ export class CaseService {
   }
 
   public async registerNewFile(file: FileDto): Promise<ICreateFile> {
+    console.log('Regisster new File', file, '\n')
+
     const newFile: File = await this.FILE_REPOSITORY.create(file);
     return {
       message: 'File created',

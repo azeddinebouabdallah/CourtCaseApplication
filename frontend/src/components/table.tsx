@@ -19,7 +19,7 @@ import ErrorBar from "./MessageBar";
 import Loader from "./Loader/index";
 
 interface IProps {
-  items?: ICase[] | any[];
+  items?: ICase[] | any[] | undefined | ICaseCount | never[];
   endpoint?: string;
   store?: RootStore;
   columns?: IColumn[];
@@ -50,8 +50,11 @@ class Table extends React.Component<IProps, IMyComponentState> {
   }
   fire(newValue: any) {
     const { items } = this.props;
+    console.log('Table items:', items)
+    
     var rows = items
-      ? items.filter(function(element, index, array) {
+      //@ts-ignore
+      ? items.filter!(function(element, index, array) {
           if (
               (element.caseNumber && element.caseNumber.includes(newValue)) ||
               (element.subject && element.subject.includes(newValue)) ||
@@ -72,8 +75,9 @@ class Table extends React.Component<IProps, IMyComponentState> {
 
   componentWillMount() {
     const { items, columns } = this.props;
+    console.log('Table items:', items)
+
     this.setState({
-      rows: items ? items : [],
       columns: columns ? columns : [],
       stateFlag: true
     });
@@ -81,8 +85,8 @@ class Table extends React.Component<IProps, IMyComponentState> {
 
   componentDidMount(){
     const { items, columns } = this.props;
+    console.log('Table items:', items)
     this.setState({
-      rows: items ? items : [],
       columns: columns ? columns : [],
       stateFlag: true
     });
@@ -90,9 +94,7 @@ class Table extends React.Component<IProps, IMyComponentState> {
   
   componentWillReceiveProps(nextProps: IProps){
     if (nextProps.items){
-      this.setState({
-        rows: nextProps.items!
-      })
+
     }
     if(nextProps.columns){
       this.setState({
@@ -114,7 +116,7 @@ class Table extends React.Component<IProps, IMyComponentState> {
     }
 
     const { columns } = this.props;
-    let sortedItems = this.props.items;
+    let sortedItems = this.state.rows;
     let isSortedDescending = column!.isSortedDescending;
 
     // If we've sorted this column, flip it.
@@ -148,7 +150,7 @@ class Table extends React.Component<IProps, IMyComponentState> {
     const { reverse } = this.props;
     if (column && item) {
       // console.log(item, column.fieldName);
-      
+
       const fieldContent = item[column.fieldName as keyof ICase] as
         | string
         | string[];
@@ -192,10 +194,10 @@ class Table extends React.Component<IProps, IMyComponentState> {
           return <span>{fieldContent}</span>;
       }
     }
-    function _copyAndSort<T>(items: T[], columnKey: string, isSortedDescending?: boolean): T[] {
+/*     function _copyAndSort<T>(items: T[], columnKey: string, isSortedDescending?: boolean): T[] {
       const key = columnKey as keyof T;
       return items.slice(0).sort((a: T, b: T) => ((isSortedDescending ? a[key] < b[key] : a[key] > b[key]) ? 1 : -1));
-    }
+    } */
   };
 
   render(): JSX.Element {
@@ -205,9 +207,11 @@ class Table extends React.Component<IProps, IMyComponentState> {
       search,
       loading,
       error,
-      responseError
+      responseError,
+      items
     } = this.props;
-    const items = this.state.rows
+    console.log('items', items);
+    
     const columns1 = buildColumns([
       {
         caseNumber: "",
@@ -254,6 +258,7 @@ class Table extends React.Component<IProps, IMyComponentState> {
             reverse={!!reverse}
             checkboxVisibility={CheckboxVisibility.hidden}
             styles={tableStyles}
+            //@ts-ignore
             items={items}
             ariaLabel="lalalalalalallaa"
             checkButtonAriaLabel="check"
@@ -278,6 +283,7 @@ class Table extends React.Component<IProps, IMyComponentState> {
 
             <DetailsList
               checkboxVisibility={CheckboxVisibility.hidden}
+              //@ts-ignore
               items={items}
               columns={this.state.columns}
               onRenderItemColumn={this.onRenderItemColumn}

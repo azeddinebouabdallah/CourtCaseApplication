@@ -40,8 +40,8 @@ class RootStore {
   claimsForm: PromiseStore;
   form: { [key: string]: PromiseStore };
   getStepper: StepperStore;
-  getAllCases: PromiseStore;
-
+  getAllCases: CaseStore;
+  getCase: CaseStore;
   constructor() {
     this.router = routingStore;
     this.notification = new NotificationStore(endpoints.get_test, null, this);
@@ -61,7 +61,8 @@ class RootStore {
     );
 
     this.getStepper = new StepperStore();
-    this.getAllCases = new PromiseStore(endpoints.get_cases, null, this);
+    this.getAllCases = new CaseStore(endpoints.get_cases, null, this);
+    this.getCase = new CaseStore(endpoints.get_case, null, this);
     this.form = {
       newTestForm: this.newTestForm = new PromiseStore(
         endpoints.new_test_form,
@@ -121,7 +122,11 @@ class RootStore {
     };
     this.getCaseParties = new CaseStore(endpoints.get_parties, null, this);
     this.getCaseAttachments = new CaseStore(endpoints.get_parties, null, this);
-    this.getPetitionsAttachments = new CaseStore(endpoints.get_parties, null, this);
+    this.getPetitionsAttachments = new CaseStore(
+      endpoints.get_parties,
+      null,
+      this
+    );
     this.getCaseExhibits = new CaseStore(endpoints.get_parties, null, this);
     this.getCaseNotices = new CaseStore(endpoints.get_parties, null, this);
     this.getCaseDecisions = new CaseStore(endpoints.get_parties, null, this);

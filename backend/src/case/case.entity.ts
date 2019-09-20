@@ -8,6 +8,7 @@ import {
   NotNull,
   HasOne,
   BeforeCreate,
+  PrimaryKey
 } from 'sequelize-typescript';
 import { StatusEnum } from './enum/case.status';
 import { File } from './file/file.entity';
@@ -22,6 +23,10 @@ import { Attachment } from './attachment/attachment.entity';
 
 @Table
 export class Case extends Model<Case> {
+  @PrimaryKey
+  @Column
+  id: number;
+
   @Column
   caseNumber: string;
 

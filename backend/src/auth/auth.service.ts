@@ -4,7 +4,7 @@ import { UserService } from '../user/user.service';
 import { User } from '../user/user.entity';
 import { JwtPayload } from '../interfaces/jwt-payload.interface';
 import { ILogin, IRegister } from '../interfaces/user.interface';
-import * as bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcrypt';
 import { SignUpDto } from './auth.docs';
 @Injectable()
 export class AuthService {

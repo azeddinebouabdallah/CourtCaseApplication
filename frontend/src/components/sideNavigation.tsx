@@ -58,7 +58,7 @@ class Navigation extends React.Component<IProps> {
 
   get currentComponent() {
     const currentItem = this.props.items[Number(this.currentStepKey)];
-    console.log(currentItem, 'ovdje je grasddasadseska')
+    console.log(this.props.items, 'testbest 1', currentItem);
 
     return currentItem ? currentItem.component : null;
   }

@@ -6,7 +6,7 @@ import {
   BeforeCreate,
   DataType,
 } from 'sequelize-typescript';
-import * as bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcrypt';
 import { RolesEnum } from './user.roles';
 
 @Table
