@@ -63,8 +63,11 @@ class Home extends React.Component<IProps & IInjected, IState> {
     });
     if ( getAllCases.data) {
       console.log('ALL DATA: ', getAllCases.data)
+      //@ts-ignore
+      console.log('Count ' , getAllCases.data.length!)
       this.setState({
-        numberOfPages: Math.ceil((getAllCases.data.count) / rowSize)
+        //@ts-ignore
+        numberOfPages: Math.ceil((getAllCases.data.length) / rowSize)
       });
     }
   } 

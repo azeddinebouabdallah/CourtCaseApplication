@@ -63,8 +63,9 @@ class NextSessions extends React.Component<IProps & IInjected, IState> {
     });
     if ( getAllCases.data) {
       this.setState({
-        numberOfPages: 1
-        // numberOfPages: Math.ceil((getAllCases.data.count) / rowSize)
+        numberOfPages: 1,
+        //@ts-ignore
+        numberOfPages: Math.ceil((getAllCases.data.length) / rowSize)
       });
     }
   } 
