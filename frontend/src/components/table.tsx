@@ -44,13 +44,14 @@ class Table extends React.Component<IProps, IMyComponentState> {
   constructor(props: IProps) {
     super(props);
     this.setState({
-      stateFlag: false
+      stateFlag: false,
+      columns: []
     });
     this.fire = this.fire.bind(this);
   }
   fire(newValue: any) {
     const { items } = this.props;
-    console.log('Table items:', items)
+    console.log('Search:', items)
     
     var rows = items
       //@ts-ignore
@@ -73,29 +74,15 @@ class Table extends React.Component<IProps, IMyComponentState> {
     });
   }
 
-  componentWillMount() {
-    const { items, columns } = this.props;
-    console.log('Table items:', items)
-
-    this.setState({
-      columns: columns ? columns : [],
-      stateFlag: true
-    });
-  }
-
   componentDidMount(){
     const { items, columns } = this.props;
     console.log('Table items:', items)
     this.setState({
       columns: columns ? columns : [],
-      stateFlag: true
     });
   }
   
   componentWillReceiveProps(nextProps: IProps){
-    if (nextProps.items){
-
-    }
     if(nextProps.columns){
       this.setState({
         columns: nextProps.columns
@@ -115,8 +102,8 @@ class Table extends React.Component<IProps, IMyComponentState> {
       return items.slice(0).sort((a: T, b: T) => ((isSortedDescending ? a[key] < b[key] : a[key] > b[key]) ? 1 : -1));
     }
 
-    const { columns } = this.props;
-    let sortedItems = this.state.rows;
+    const { columns, items } = this.props;
+    let sortedItems = items;
     let isSortedDescending = column!.isSortedDescending;
 
     // If we've sorted this column, flip it.
@@ -125,12 +112,16 @@ class Table extends React.Component<IProps, IMyComponentState> {
     }
 
     // Sort the items.
+    //@ts-ignore
     sortedItems! = _copyAndSort(sortedItems!, column!.fieldName!, isSortedDescending);
 
     // Reset the items and columns to match the state.
+    //@ts-ignore
     this.setState({
-      rows: sortedItems!,
-      columns: columns!.map(col => {
+      //@ts-ignore
+      rows: sortedItems,
+      //@ts-ignore
+      columns: columns.map(col => {
         col.isSorted = col.key === column!.key;
 
         if (col.isSorted) {
@@ -251,7 +242,7 @@ class Table extends React.Component<IProps, IMyComponentState> {
             boxShadow: SHADOWS.FORM
           }
         };
-    return !search ? (
+    return this.state ? (!search ? (
       <Layout width="max-content">
         {items && (
           <FabricDetailsList
@@ -259,7 +250,7 @@ class Table extends React.Component<IProps, IMyComponentState> {
             checkboxVisibility={CheckboxVisibility.hidden}
             styles={tableStyles}
             //@ts-ignore
-            items={items}
+            items={this.state.stateFlag ? this.state.rows: items}
             ariaLabel="lalalalalalallaa"
             checkButtonAriaLabel="check"
             className="headerWrapper"
@@ -284,8 +275,8 @@ class Table extends React.Component<IProps, IMyComponentState> {
             <DetailsList
               checkboxVisibility={CheckboxVisibility.hidden}
               //@ts-ignore
-              items={items}
-              columns={this.state.columns}
+              items={this.state.stateFlag ? this.state.rows: items}
+              columns={columns}
               onRenderItemColumn={this.onRenderItemColumn}
               setKey="set"
               onActiveItemChanged={e => this.handleActiveItem(e)}
@@ -299,7 +290,7 @@ class Table extends React.Component<IProps, IMyComponentState> {
           </div>
         )}
       </div>
-    );
+    )) : (<p>Loading</p>);
   }
   
 }
