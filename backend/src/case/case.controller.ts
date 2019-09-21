@@ -61,8 +61,7 @@ export class CaseController {
 
   @Get('/resource')
   public async search(@Query() query, @Res() res) {
-    let id = query.id
-    const cases = await this.caseService.searchCase(id);
+    const cases = await this.caseService.searchCase(query);
     return res.status(HttpStatus.OK).json(cases);
   }
 

@@ -23,9 +23,6 @@ import { Attachment } from './attachment/attachment.entity';
 
 @Table
 export class Case extends Model<Case> {
-  @PrimaryKey
-  @Column
-  id: number;
 
   @Column
   caseNumber: string;
