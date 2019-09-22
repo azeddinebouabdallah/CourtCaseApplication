@@ -67,10 +67,10 @@ export class CaseService {
   findAndCountAll = async (data: CreateCaseDto) =>
     this.CASE_REPOSITORY.findAndCountAll({});
 
-  searchCase = async id => {
-    console.log('ID ---------------------- ' + id)
+  searchCase = async query => {
+    console.log('ID ---------------------- ' + query)
     return this.CASE_REPOSITORY.findOne<Case>({
-      where: {id : id},
+      where: query,
       include: [
         {
           model: File,

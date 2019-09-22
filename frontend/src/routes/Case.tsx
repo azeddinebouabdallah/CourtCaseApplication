@@ -1,6 +1,6 @@
 import React from "react";
 import { Layout } from "../styled";
-import Navigation from "../components/sideNavigation";
+import Navigation from "../components/sideNavigationCreate";
 import casePreviewData, {SingleCasePreviewData} from "../constants/preview";
 import { inject, observer } from "mobx-react";
 import { compose } from "recompose";
@@ -46,8 +46,8 @@ class Case extends React.Component<IProps, IState> {
     try{
       console.log('Pathname: ', pathname.substring(14))
       await store.getCase.fetch({id: pathname.substring(14)})
-      console.log('Data', store.getCase.singleCaseData)
       store.getCase.setDataCase();
+      console.log('Data', store.getCase.singleCaseData)
       this.setState({ caseData: SingleCasePreviewData(store) });
       //@ts-ignore
       console.log('Single CaseDate result', store.getCase.singleCaseData);

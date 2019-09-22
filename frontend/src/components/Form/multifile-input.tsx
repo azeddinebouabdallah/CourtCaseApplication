@@ -42,6 +42,7 @@ class MultiFileInput extends Component<IProps, IState> {
   }
 
   onRemoveTag = (index: number) => {
+    console.log('onRemoveTag')
     const {value} = this.props;
     if (value) {
       let files = Object.values(value);
@@ -51,17 +52,20 @@ class MultiFileInput extends Component<IProps, IState> {
   };
 
   clickUpload = () => {
+    console.log('clickUpload')
     if (this._fileUploadRef && this._fileUploadRef.current) {
       this._fileUploadRef.current.click();
     }
   };
   uploadHelper = (clickEvent: any) => {
+    console.log('uploadHelper')
     if (clickEvent.target && clickEvent.target.files) {
       this.uploadFile(clickEvent.target.files);
     }
   };
 
   parseValue = (files: any) => {
+    console.log('parseValue')
     if (!files) {
       return [];
     }
@@ -73,6 +77,7 @@ class MultiFileInput extends Component<IProps, IState> {
   };
 
   uploadFile = (files: any) => {
+    console.log('uploadFile')
     console.log('values', files);
 
     // this.setState({
